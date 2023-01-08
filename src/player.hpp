@@ -23,6 +23,8 @@ class Player {
     float x_position = 0.f;
     float y_position = 0.f;
     sf::RectangleShape shape = sf::RectangleShape(sf::Vector2f(50,50));
+
+    float calculateNewVelocity(float velocity, float acceleration);
 };
 
 #endif
