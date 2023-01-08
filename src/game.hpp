@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include "player.hpp"
 
 #define WIN_SIZE_X 1000
 #define WIN_SIZE_Y 1000
@@ -17,6 +18,7 @@ class Game {
 
     private:
     sf::RenderWindow *window;
+    Player player = Player();
 };
 
 #endif

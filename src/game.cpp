@@ -18,12 +18,15 @@ void Game::run() {
             }
 
             // update event based components
+            player.updateWithEvent(event);
         }
 
         // update components
+        player.update();
 
         window->clear();
         // draw window
+        player.draw(window);
         window->display();
     }
 }
