@@ -4,10 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
-
-#define BASE_MAX_HP 100.f
-#define ACCELERATION_VALUE 2.f
-#define TOP_SPEED 14.f
+#include "params.hpp"
 
 class Player {
     public:

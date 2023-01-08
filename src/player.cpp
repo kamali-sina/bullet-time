@@ -40,21 +40,19 @@ void Player::updateWithEvent(sf::Event &event) {
 
 void Player::update() {
     if (y_acceleration != 0) {
-        // y_velocity = sign(y_velocity) * min(abs(y_velocity + y_acceleration), TOP_SPEED);
         y_velocity += y_acceleration;
         if (y_velocity > TOP_SPEED) y_velocity = TOP_SPEED;
         else if (y_velocity < -TOP_SPEED) y_velocity = -TOP_SPEED;
     } else {
-        y_velocity = sign(y_velocity) * max(abs(y_velocity) - (ACCELERATION_VALUE / 4), 0.f);
+        y_velocity = sign(y_velocity) * max(abs(y_velocity) - FRICTION_VALUE, 0.f);
     }
 
     if (x_acceleration != 0) {
-        // x_velocity = sign(x_velocity) * min(abs(x_velocity + x_acceleration), TOP_SPEED);
         x_velocity += x_acceleration;
         if (x_velocity > TOP_SPEED) x_velocity = TOP_SPEED;
         else if (x_velocity < -TOP_SPEED) x_velocity = -TOP_SPEED;
     } else {
-        x_velocity = sign(x_velocity) * max(abs(x_velocity) - (ACCELERATION_VALUE / 4), 0.f);
+        x_velocity = sign(x_velocity) * max(abs(x_velocity) - FRICTION_VALUE, 0.f);
     }
 
     x_position += x_velocity;
