@@ -53,8 +53,27 @@ void Player::update() {
     y_velocity = calculateNewVelocity(y_velocity, y_acceleration);
     x_velocity = calculateNewVelocity(x_velocity, x_acceleration);
 
-    x_position += x_velocity;
-    y_position += y_velocity;
+    float new_x_position = x_position + x_velocity;
+    float new_y_position = y_position + y_velocity;
+
+    if (new_x_position + PLAYER_SIZE_X > WIN_SIZE_X)  {
+        new_x_position = WIN_SIZE_X - PLAYER_SIZE_X;
+        x_velocity = (-sign(x_velocity)) * max(abs(x_velocity) - WALL_DAMP_EFFECT, 0.f);
+    } else if (new_x_position < 0) {
+        new_x_position = 0;
+        x_velocity = (-sign(x_velocity)) * max(abs(x_velocity) - WALL_DAMP_EFFECT, 0.f);
+    }
+
+    if (new_y_position + PLAYER_SIZE_Y > WIN_SIZE_Y) {
+        new_y_position = WIN_SIZE_Y - PLAYER_SIZE_Y;
+        y_velocity = (-sign(y_velocity)) * max(abs(y_velocity) - WALL_DAMP_EFFECT, 0.f);
+    } else if (new_y_position < 0) {
+        new_y_position = 0;
+        y_velocity = (-sign(y_velocity)) * max(abs(y_velocity) - WALL_DAMP_EFFECT, 0.f);
+    }
+    
+    x_position = new_x_position;
+    y_position = new_y_position;
 
     shape.setPosition(sf::Vector2f(x_position, y_position));
 }
