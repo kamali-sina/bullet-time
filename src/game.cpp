@@ -8,6 +8,7 @@ Game::Game(sf::RenderWindow &win) {
 
 
 void Game::run() {
+    int cnt = 0;
     while (window->isOpen())
     {
         sf::Event event;

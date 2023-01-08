@@ -5,10 +5,7 @@
 #include <iostream>
 #include <string>
 #include "player.hpp"
-
-#define WIN_SIZE_X 1000
-#define WIN_SIZE_Y 1000
-#define WIN_NAME   "Bullet Time"
+#include "params.hpp"
 
 class Game {
     public:
