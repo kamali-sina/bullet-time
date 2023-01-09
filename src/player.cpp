@@ -10,17 +10,25 @@ int sign(float number) {
 
 Player::Player() {
     shape.setFillColor(sf::Color::Green);
-    shape.setPosition(sf::Vector2f(x_position, y_position));
+    shape.setPosition(position);
 }
 
-float Player::calculateNewVelocity(float velocity, float acceleration) {
+void Player::setPosition(sf::Vector2f new_postion) {
+    shape.setPosition(position);
+}
+
+sf::Vector2f Player::getPosition() {
+    return shape.getPosition();
+}
+
+float Player::calculateNewVelocity(float _velocity, float _acceleration) {
     float new_velocity;
-    if (acceleration != 0) {
-        new_velocity = velocity + acceleration;
+    if (_acceleration != 0) {
+        new_velocity = _velocity + _acceleration;
         if (new_velocity > TOP_SPEED) new_velocity = TOP_SPEED;
         else if (new_velocity < -TOP_SPEED) new_velocity = -TOP_SPEED;
     } else {
-        new_velocity = sign(velocity) * max(abs(velocity) - FRICTION_VALUE, 0.f);
+        new_velocity = sign(_velocity) * max(abs(_velocity) - FRICTION_VALUE, 0.f);
     }
     return new_velocity;
 }
@@ -28,54 +36,54 @@ float Player::calculateNewVelocity(float velocity, float acceleration) {
 void Player::updateWithEvent(sf::Event &event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
-            y_acceleration = -ACCELERATION_VALUE;
+            acceleration.y = -ACCELERATION_VALUE;
         } else if (event.key.code == sf::Keyboard::Down) {
-            y_acceleration = ACCELERATION_VALUE;
+            acceleration.y = ACCELERATION_VALUE;
         } else if (event.key.code == sf::Keyboard::Right) {
-            x_acceleration = ACCELERATION_VALUE;
+            acceleration.x = ACCELERATION_VALUE;
         } else if (event.key.code == sf::Keyboard::Left) {
-            x_acceleration = -ACCELERATION_VALUE;
+            acceleration.x = -ACCELERATION_VALUE;
         }
     } else if (event.type == sf::Event::KeyReleased) {
         if (event.key.code == sf::Keyboard::Up) {
-            y_acceleration = 0;
+            acceleration.y = 0;
         } else if (event.key.code == sf::Keyboard::Down) {
-            y_acceleration = 0;
+            acceleration.y = 0;
         } else if (event.key.code == sf::Keyboard::Right) {
-            x_acceleration = 0;
+            acceleration.x = 0;
         } else if (event.key.code == sf::Keyboard::Left) {
-            x_acceleration = 0;
+            acceleration.x = 0;
         }
     }
 }
 
 void Player::update() {
-    y_velocity = calculateNewVelocity(y_velocity, y_acceleration);
-    x_velocity = calculateNewVelocity(x_velocity, x_acceleration);
+    velocity.y = calculateNewVelocity(velocity.y, acceleration.y);
+    velocity.x = calculateNewVelocity(velocity.x, acceleration.x);
 
-    float new_x_position = x_position + x_velocity;
-    float new_y_position = y_position + y_velocity;
+    float new_x_position = position.x + velocity.x;
+    float new_y_position = position.y + velocity.y;
 
     if (new_x_position + PLAYER_SIZE_X > WIN_SIZE_X)  {
         new_x_position = WIN_SIZE_X - PLAYER_SIZE_X;
-        x_velocity = (-sign(x_velocity)) * max(abs(x_velocity) - WALL_DAMP_EFFECT, 0.f);
+        velocity.x = (-sign(velocity.x)) * max(abs(velocity.x) - WALL_DAMP_EFFECT, 0.f);
     } else if (new_x_position < 0) {
         new_x_position = 0;
-        x_velocity = (-sign(x_velocity)) * max(abs(x_velocity) - WALL_DAMP_EFFECT, 0.f);
+        velocity.x = (-sign(velocity.x)) * max(abs(velocity.x) - WALL_DAMP_EFFECT, 0.f);
     }
 
     if (new_y_position + PLAYER_SIZE_Y > WIN_SIZE_Y) {
         new_y_position = WIN_SIZE_Y - PLAYER_SIZE_Y;
-        y_velocity = (-sign(y_velocity)) * max(abs(y_velocity) - WALL_DAMP_EFFECT, 0.f);
+        velocity.y = (-sign(velocity.y)) * max(abs(velocity.y) - WALL_DAMP_EFFECT, 0.f);
     } else if (new_y_position < 0) {
         new_y_position = 0;
-        y_velocity = (-sign(y_velocity)) * max(abs(y_velocity) - WALL_DAMP_EFFECT, 0.f);
+        velocity.y = (-sign(velocity.y)) * max(abs(velocity.y) - WALL_DAMP_EFFECT, 0.f);
     }
     
-    x_position = new_x_position;
-    y_position = new_y_position;
+    position.x = new_x_position;
+    position.y = new_y_position;
 
-    shape.setPosition(sf::Vector2f(x_position, y_position));
+    shape.setPosition(position);
 }
 
 void Player::draw(sf::RenderWindow *window) {

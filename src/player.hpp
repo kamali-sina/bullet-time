@@ -13,15 +13,14 @@ class Player {
     void updateWithEvent(sf::Event &event);
     void update();
     void draw(sf::RenderWindow *window);
+    void setPosition(sf::Vector2f new_postion);
+    sf::Vector2f getPosition();
 
     private:
     float hp = BASE_MAX_HP;
-    float x_velocity = 0.f;
-    float y_velocity = 0.f;
-    float x_acceleration = 0.f;
-    float y_acceleration = 0.f;
-    float x_position = 0.f;
-    float y_position = 0.f;
+    sf::Vector2f velocity = sf::Vector2f(0.f, 0.f);
+    sf::Vector2f acceleration = sf::Vector2f(0.f, 0.f);
+    sf::Vector2f position = sf::Vector2f(0.f, 0.f);
     sf::RectangleShape shape = sf::RectangleShape(sf::Vector2f(PLAYER_SIZE_X, PLAYER_SIZE_Y));
 
     float calculateNewVelocity(float velocity, float acceleration);
