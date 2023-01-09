@@ -4,8 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "player.hpp"
 #include "params.hpp"
+#include "line.hpp"
 
 class Game {
     public:
@@ -16,6 +18,7 @@ class Game {
     private:
     sf::RenderWindow *window;
     Player player = Player();
+    std::vector<Line*> lines;
 };
 
 #endif

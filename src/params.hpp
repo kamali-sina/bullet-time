@@ -11,5 +11,6 @@
 #define PLAYER_SIZE_X 50.f
 #define PLAYER_SIZE_Y 50.f
 #define WALL_DAMP_EFFECT 2.f
+#define PI 3.141592653589793238463f
 
 #endif

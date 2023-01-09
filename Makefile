@@ -8,8 +8,8 @@ OUTPUT_NAME=game.out
 
 all: ${OUTPUT_NAME}
 
-${OUTPUT_NAME}: rm mk ${BUILD_DIR}/main.o ${BUILD_DIR}/game.o ${BUILD_DIR}/player.o
-	$(CC) ${BUILD_DIR}/main.o ${BUILD_DIR}/game.o ${BUILD_DIR}/player.o ${COMPILER_FLAGS} ${LINKER_FLAGS} -o ./${OUTPUT_NAME}
+${OUTPUT_NAME}: rm mk ${BUILD_DIR}/main.o ${BUILD_DIR}/game.o ${BUILD_DIR}/player.o ${BUILD_DIR}/line.o
+	$(CC) ${BUILD_DIR}/main.o ${BUILD_DIR}/game.o ${BUILD_DIR}/player.o ${BUILD_DIR}/line.o ${COMPILER_FLAGS} ${LINKER_FLAGS} -o ./${OUTPUT_NAME}
 
 ${BUILD_DIR}/main.o: ${SRC_DIR}/main.cpp
 	$(CC) -c ${SRC_DIR}/main.cpp ${COMPILER_FLAGS} -o ${BUILD_DIR}/main.o
@@ -19,6 +19,9 @@ ${BUILD_DIR}/game.o: ${SRC_DIR}/game.cpp
 
 ${BUILD_DIR}/player.o: ${SRC_DIR}/player.cpp
 	$(CC) -c ${SRC_DIR}/player.cpp ${COMPILER_FLAGS} -o ${BUILD_DIR}/player.o
+
+${BUILD_DIR}/line.o: ${SRC_DIR}/line.cpp
+	$(CC) -c ${SRC_DIR}/line.cpp ${COMPILER_FLAGS} -o ${BUILD_DIR}/line.o
 
 run: ${OUTPUT_NAME}
 	./${OUTPUT_NAME}
