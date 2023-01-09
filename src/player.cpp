@@ -21,6 +21,14 @@ sf::Vector2f Player::getPosition() {
     return shape.getPosition();
 }
 
+void Player::setVelocity(sf::Vector2f new_velocity) {
+    velocity = new_velocity;
+}
+
+sf::Vector2f Player::getVelocity() {
+    return velocity;
+}
+
 float Player::calculateNewVelocity(float _velocity, float _acceleration) {
     float new_velocity;
     if (_acceleration != 0) {

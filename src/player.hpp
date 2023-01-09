@@ -15,6 +15,8 @@ class Player {
     void draw(sf::RenderWindow *window);
     void setPosition(sf::Vector2f new_postion);
     sf::Vector2f getPosition();
+    void setVelocity(sf::Vector2f new_velocity);
+    sf::Vector2f getVelocity();
 
     private:
     float hp = BASE_MAX_HP;
