@@ -4,12 +4,21 @@ using namespace std;
 
 Game::Game(sf::RenderWindow &win) {
     window = &win;
-    sf::RectangleShape *rect = new sf::RectangleShape(sf::Vector2f(1.f, 1000.f));
-    rect->setPosition(sf::Vector2f(500.f, 0.f));
-    rect->setFillColor(sf::Color::White);
-    rect->setOutlineColor(sf::Color::White);
     
-    lines.push_back(rect);
+    Line* l1 = new Line(sf::Vector2f(500.f, 0.f), sf::Vector2f(500.f, 1000.f));
+    lines.push_back(l1);
+
+    l1 = new Line(sf::Vector2f(0.f, 500.f), sf::Vector2f(1000.f, 500.f));
+
+    lines.push_back(l1);
+
+    l1 = new Line(sf::Vector2f(250.f, 500.f), sf::Vector2f(500.f, 250.f));
+
+    lines.push_back(l1);
+}
+
+void calculateCollision(sf::RectangleShape line, sf::Vector2f &position, sf::Vector2f &velocity) {
+    
 }
 
 
@@ -32,14 +41,16 @@ void Game::run() {
         player.update();
 
         // handle collisions and movable objects
-        
+        // for (sf::RectangleShape *rect : lines) {
+        //     window->draw(*rect);
+        // }
 
         window->clear();
         // draw window
         player.draw(window);
 
-        for (sf::RectangleShape *rect : lines) {
-            window->draw(*rect);
+        for (Line *line : lines) {
+            line->draw(window);
         }
 
         
