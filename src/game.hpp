@@ -12,7 +12,7 @@
 class Game {
     public:
     Game(sf::RenderWindow &win);
-
+    void handleCollision();
     void run();
 
     private:
