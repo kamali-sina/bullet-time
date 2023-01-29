@@ -14,6 +14,7 @@ Player::Player() {
 }
 
 void Player::setPosition(sf::Vector2f new_postion) {
+    position = new_postion;
     shape.setPosition(position);
 }
 
@@ -63,6 +64,16 @@ void Player::updateWithEvent(sf::Event &event) {
             acceleration.x = 0;
         }
     }
+}
+
+sf::Vector2f Player::getNewPosition() {
+    velocity.y = calculateNewVelocity(velocity.y, acceleration.y);
+    velocity.x = calculateNewVelocity(velocity.x, acceleration.x);
+
+    float new_x_position = position.x + velocity.x;
+    float new_y_position = position.y + velocity.y;
+
+    return sf::Vector2f(new_x_position, new_y_position);
 }
 
 void Player::update() {
