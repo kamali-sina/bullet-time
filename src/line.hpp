@@ -6,7 +6,6 @@
 #include <cmath>
 #include "params.hpp"
 
-//TODO: line 500,250 -> 250,500 does not work
 class Line {
 public:
     Line(sf::Vector2f point1, sf::Vector2f point2);
