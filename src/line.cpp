@@ -14,7 +14,11 @@ Line::Line(sf::Vector2f point1, sf::Vector2f point2) {
     tempshape.setPosition(point1);
     if (end.x - start.x != 0) {
         float degree = atan((end.y - start.y) / (end.x - start.x)) * (180.0/PI);
-        tempshape.setRotation(degree - 90);
+        if (end.x > start.x) {
+            tempshape.setRotation(degree - 90);
+        } else {
+            tempshape.setRotation(degree + 90);
+        }
     }
     shape = tempshape;
 }
