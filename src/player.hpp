@@ -18,6 +18,7 @@ class Player {
     void setVelocity(sf::Vector2f new_velocity);
     sf::Vector2f getVelocity();
     sf::Vector2f getNewPosition();
+    void updateVelocity();
 
     private:
     float hp = BASE_MAX_HP;
