@@ -2,6 +2,10 @@
 
 using namespace std;
 
+float getDistanceBetween(sf::Vector2f point1, sf::Vector2f point2) {
+    return sqrt(((point1.x - point2.x) * (point1.x - point2.x)) + ((point1.y - point2.y) * (point1.y - point2.y)));
+}
+
 bool onSegment(sf::Vector2f p, sf::Vector2f q, sf::Vector2f r)
 {
     if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) &&
@@ -40,6 +44,32 @@ bool doIntersect(sf::Vector2f p1, sf::Vector2f q1, sf::Vector2f p2, sf::Vector2f
     if (o4 == 0 && onSegment(p2, q1, q2)) return true;
   
     return false;
+}
+
+sf::Vector2f lineLineIntersection(sf::Vector2f A, sf::Vector2f B, sf::Vector2f C, sf::Vector2f D)
+{
+    // Line AB represented as a1x + b1y = c1
+    double a1 = B.y - A.y;
+    double b1 = A.x - B.x;
+    double c1 = a1*(A.x) + b1*(A.y);
+ 
+    // Line CD represented as a2x + b2y = c2
+    double a2 = D.y - C.y;
+    double b2 = C.x - D.x;
+    double c2 = a2*(C.x)+ b2*(C.y);
+ 
+    double determinant = a1*b2 - a2*b1;
+ 
+    if (determinant == 0)
+    {
+        return sf::Vector2f(-1,-1);
+    }
+    else
+    {
+        double x = (b2*c1 - b1*c2)/determinant;
+        double y = (a1*c2 - a2*c1)/determinant;
+        return sf::Vector2f(x, y);
+    }
 }
 
 Game::Game(sf::RenderWindow &win) {
@@ -104,18 +134,21 @@ void Game::run() {
 void Game::handleCollision() {
     sf::Vector2f current_position = player.getPosition();
     sf::Vector2f new_position = player.getNewPosition();
+    sf::Vector2f closest_point = new_position;
     if (player.getVelocity().x > 0) {
         new_position.x = new_position.x + PLAYER_SIZE_X;
     } 
     if (player.getVelocity().y > 0) {
         new_position.y = new_position.y + PLAYER_SIZE_Y;
-    } 
+    }
     for (Line *line : lines) {
         if (doIntersect(new_position, current_position, line->start, line->end)) {
             cout<<"yes"<<endl;
-            exit(0);
-        } else {
-            cout<<"No."<<endl;
+            sf::Vector2f collision_point = lineLineIntersection(new_position, current_position, line->start, line->end);
+            cout<<"point: " << collision_point.x << " " << collision_point.y << endl;
+            if (getDistanceBetween(current_position, closest_point) > getDistanceBetween(current_position, collision_point)) {
+                closest_point = collision_point;
+            }
         }
     }
 }
